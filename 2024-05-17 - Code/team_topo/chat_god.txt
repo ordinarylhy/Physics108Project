@@ -1,0 +1,44 @@
+To connect a Keithley 236 Source-Measure Unit (SMU) to a computer using Python, you can utilize the pyvisa library, which provides a Python API for controlling measurement devices via the VISA (Virtual Instrument Software Architecture) standard. Here's a basic example of how you can establish communication and perform simple operations:
+
+1. First, make sure you have pyvisa installed. You can install it via pip:
+
+```
+pip install pyvisa
+```
+
+2. Then, you need to find out the VISA resource name for your Keithley 236. You can use the `visa` module from pyvisa to list available resources:
+
+```python
+import visa
+
+rm = visa.ResourceManager()
+print(rm.list_resources())
+```
+
+This should print out a list of available resources, which will include your Keithley 236. It might look something like `USB0::0x05E6::0x2360::04314121::0::INSTR`.
+
+3. Once you have the resource name, you can open a connection to the instrument and send commands:
+
+```python
+import visa
+
+# Open a connection to the instrument
+rm = visa.ResourceManager()
+keithley = rm.open_resource("USB0::0x05E6::0x2360::04314121::0::INSTR")  # Replace this with your actual resource name
+
+# Send commands to the instrument
+keithley.write("*RST")  # Reset the instrument to its default settings
+keithley.write(":SOUR:FUNC VOLT")  # Set source function to voltage
+keithley.write(":SOUR:VOLT 1")  # Set source voltage to 1V
+keithley.write(":OUTP ON")  # Enable the output
+
+# Read measurements
+measurement = keithley.query(":READ?")
+
+print("Measurement:", measurement)
+
+# Close the connection
+keithley.close()
+```
+
+This is a basic example to get you started. Depending on what you want to do with the instrument, you'll need to refer to its programming manual for the specific commands and syntax to use. The Keithley 236 programming manual should provide you with detailed information on available commands and how to use them.
