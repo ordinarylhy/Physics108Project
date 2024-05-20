@@ -46,11 +46,11 @@ magnet.print_readable_snapshot(update = True) # check magnet status
 
 # LOCK-IN PARAMS 
 lockin_GPI = 7 
-lockin_sensivity = ... #
-lockin_ref_freq = 100 # stay at ~100 Hz, based on discussion with sandesh
-lockin_ref_V = ... # ! what determines this? (think it does not matter, as long as we don't heat things up)
+lockin_sensivity = 1e-6 # order of uV
+lockin_ref_freq = 23 # stay at ~100 Hz, prime number
+lockin_ref_V = ... # ! 
 lockin_ref_phi = 0
-lockin_tc = 0.03 # lock-in time constant, must be larger than 1 / (lock-in ref. frequency)
+lockin_tc = 0.1 # larger than 1 / (lock-in ref. frequency)
 lockin_calib_time = 3 * lockin_tc # calibration time is ~3 * (time constant)
 
 # CONNECT TO LOCK-IN
