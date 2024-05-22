@@ -7,9 +7,9 @@
 measurements. We integrate our tempetature control capabilities with our 
 data collection and lock-in control scripts. Does not consider B-field yet. 
 (*) Need to do: 
-1. t_temp: time needed for temperature to callibrate 
-2. lockin_temp parameters: parameters used to init the lock-in for temp measurements
-3. get_temp(): function to get tempetature 
+1. add value for t_temp (time needed for temperature to callibrate)
+2. add lockin_temp parameters (parameters used to init the lock-in for temp measurements)
+3. add get_temp() (function to get tempetature)
 4. add value of lockin_ref_V: based on outer resistor, need to confirm its value; JMB will do this
 '''
 
@@ -84,7 +84,7 @@ lockin_temp.print_readable_snapshot() # check updated params
 ### DO SWEEP 
 
 # SET-UP SWEEP
-temp_min, temp_max, temp_points = 1, 10, 100 # ! examples, need to determine  
+temp_min, temp_max, temp_points = 4, 20, 100 # ! these are just examples, need to put in actual values
 B_min, B_max, B_points = 1e-5, 5, 200 
 temps = np.linspace(temp_min, temp_max, temp_points)
 Bs = np.linspace(B_min, B_max, B_points)
@@ -93,8 +93,8 @@ N = 10
 
 # RUN SWEEP 
 for T in temps: 
-    set_temperature(temp = T, big_resistor = 1e6, lockin = lockin_temp, DC_source = None, v_goal = 0.002, chart, tolerance = 0.1)
-    time.sleep(t_temp) # ! wait for temperature to calibrate 
+    set_temperature(temp = T, big_resistor = 1e6, lockin = lockin_temp, DC_source = None, v_goal = 0.002, chart, tolerance = 0.1) # ! needs to be checked
+    time.sleep(t_temp) # ! need t_temp 
     dat = []
     for B in Bs:
         # Set up field measurement
@@ -103,7 +103,7 @@ for T in temps:
         time.sleep(t_field) 
         time.sleep(lockin_calib_time)
         # Extract data points 
-        V, B, T, magnet_current = lockin_measure.R(), B, get_temp(), B / N # ! add temp
+        V, B, T, magnet_current = lockin_measure.R(), B, get_temp(), B / N # ! add get_temp()
         print('V, B, T, magnet current')
         print(V, B, T, magnet_current) # print current status 
         dat.append(np.array([V, B, T, magnet_current]))
