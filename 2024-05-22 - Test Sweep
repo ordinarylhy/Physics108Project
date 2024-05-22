@@ -3,9 +3,10 @@
 ############################################################################
 
 '''
-In this script, we set up a loop to collect voltage
-measurements as we sweep the temperature and B-field 
-Need: 
+(*) In this script, we set up a test loop to collect voltage
+measurements. We integrate our tempetature control capabilities with our 
+data collection and lock-in control scripts. Does not consider B-field yet. 
+(*) Need to do: 
 1. t_temp: time needed for temperature to callibrate 
 2. lockin_temp parameters: parameters used to init the lock-in for temp measurements
 3. get_temp(): function to get tempetature 
